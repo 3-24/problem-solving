@@ -13,7 +13,7 @@ int compare(const void *a, const void *b){
 int main(){
   int n;
   scanf("%d",&n);
-  char words[n][50];
+  char words[n][51];
   for (int i=0;i<n;i++){
     scanf("%s",words[i]);
   }
