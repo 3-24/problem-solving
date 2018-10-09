@@ -1,0 +1,11 @@
+*.xml
+*.bin
+*.exe
+*.txt
+*.dll
+*.pptx
+BOJ/cpp/cmake-build-debug/
+*/.idea/
+BOJ/cpp/main.cpp
+BOJ/cpp/.idea/workspace.xml
+*.iml
