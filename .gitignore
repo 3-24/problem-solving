@@ -9,3 +9,4 @@ BOJ/cpp/cmake-build-debug/
 BOJ/cpp/main.cpp
 BOJ/cpp/.idea/workspace.xml
 *.iml
+main.cpp
