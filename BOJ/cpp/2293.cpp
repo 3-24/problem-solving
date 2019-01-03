@@ -1,13 +1,23 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int main(){
-    int n,k;
-    scanf("%d %d",&n,&k);
-    int value[n], numCases[k+1] = {1,0,};
-    for (int i=0;i<n;i++) {
-        scanf("%d", &value[i]);
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int n,k; // 1 <= n <= 100, 1 <= k <= 10000
+    cin >> n >> k;
+    vector<int> Value;
+    int resultArr[k+1] = {1,};
+    int t;
+    for (int i=0;i<n;i++){
+        cin >> t;
+        Value.push_back(t);
     }
-
+    for (auto i:Value){
+        for (int j=i;j<=k;j++){
+            resultArr[j] += resultArr[j-i];
+        }
+    }
+    cout << resultArr[k];
     return 0;
 }
