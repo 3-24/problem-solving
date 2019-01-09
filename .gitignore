@@ -8,3 +8,4 @@ cmake-build-debug/
 .idea/
 *.iml
 main.cpp
+.vscode/
