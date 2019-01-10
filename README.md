@@ -5,7 +5,7 @@ This repo gathers my competitive programming trials in various online judge site
 * online judge(language) - ID
 
 1. [Baekjoon Online Judge](https://acmicpc.net)(ko) - [uncertainty](https://www.acmicpc.net/user/uncertainty)
-2. [codeforces](https://codeforces.com) - <a href="https://codeforces.com/profile/youngseok"><span style="color:#03A89E">youngseok</span></a>
+2. [codeforces](https://codeforces.com) - ![#03a89e](https://placehold.it/15/03a89e/000000?text=+)[youngseok](https://codeforces.com/profile/youngseok)
 3. [codejam](https://code.google.com/codejam/)
 4. [Nexon Youth Programming Challenge](https://nypc.co.kr)(ko)
 
