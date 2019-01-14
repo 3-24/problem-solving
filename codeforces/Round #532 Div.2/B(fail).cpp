@@ -1,16 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
-int checkDiff[100001]={0,};
+bool checkDiff[100001];
 
 
 // initialize checkDiff as false
-int initDiff(int x){
-    int count = 0;
-    for (int i=1;i<=x;i++){
-        checkDiff[i] -= 1;
-        if (checkDiff[i] != 0) count++;
+void initDiff(int x){
+    for (int i=0;i<=x;i++){
+        checkDiff[i] = false;
     }
-    return count;
 }
 
 
@@ -21,20 +18,23 @@ int main() {
     cin >> n >> m;
 
     int diff; // new-designed difficulty
+
+    initDiff(n);
     int count = 0;
 
-    for (int r=1;r<=m;r++){
+    while (m--){
         cin >> diff;
 
-        if (checkDiff[diff] == 0){
+        // if false
+        if (!checkDiff[diff]){
             count++;
+            checkDiff[diff] = true;
         }
-
-        checkDiff[diff]++;
 
         // if all difficulty is ready
         if (count == n){
-            count = initDiff(n);
+            initDiff(n);
+            count = 0;
             cout << 1;
         }
 
