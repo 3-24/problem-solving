@@ -1,6 +1,13 @@
 # Competitive-Programming
 
-This repo gathers my competitive programming trials in various online judge sites.
+This repo gathers algorithmic problem-solving trials in various online judge environments.
+
+<div name="logo">
+<img src = "https://d2gd6pc034wcta.cloudfront.net/images/logo@2x.png" height = "50">
+<img src = "https://st.codeforces.com/s/75305/images/codeforces-logo-with-telegram.png" height = "50">
+<img src = "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/codejamlogo_XsEJBSX.max-1000x1000.png" height = "100">
+<img src = "https://www.nypc.co.kr/resources/Images/common/logo.gif;jsessionid=8CE9A30F415BC306DFCFDA3B8761D80A" height = "50">
+</div>
 
 * online judge(language) - ID
 
@@ -11,4 +18,4 @@ This repo gathers my competitive programming trials in various online judge site
 
 ## Contribution
 
-It's free to review my code and make issues in various reasons like legibility, optimization. For language, Korean and English is preferred.
+It's free to review my code and make issues in various reasons like legibility, optimization.
