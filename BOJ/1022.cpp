@@ -24,7 +24,7 @@ int main(){
     cin.tie(NULL);
     int r1,c1,r2,c2;
     cin >> r1 >> c1 >> r2 >> c2; // abs value <= 5000, 0<=r2-r1<=49 , 0<=c2-c1 <= 49
-    int D[r2-r1+1][c2-c1+1], space = 0;
+   int D[r2-r1+1][c2-c1+1], space = 0;
     for (int i=0;i<r2-r1+1;i++){
         for (int j=0;j<c2-c1+1;j++){
             int x = i+r1;
