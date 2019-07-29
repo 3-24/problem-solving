@@ -1,4 +1,4 @@
-# Competitive-Programming
+# Problem-Solving
 
 This repo gathers algorithmic problem-solving trials in various online judge environments.
 
