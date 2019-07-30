@@ -9,3 +9,4 @@ cmake-build-debug/
 *.iml
 main.cpp
 .vscode/
+a.out
