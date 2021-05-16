@@ -1,0 +1,14 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int t;
+    cin >> t;
+    int n,m,k;
+    while (t--){
+        cin >> n >> m >> k;
+        if (n*m - 1 == k) cout << "YES" << endl;
+        else cout << "NO" << endl;
+    }
+    return 0;
+}
