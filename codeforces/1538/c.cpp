@@ -72,26 +72,13 @@ void solve(){
     }
     sort(all(arr));
     debug(arr);
-    ll prev_start = 0;
-    ll prev_end = 0;
-    for (ll i=n-1; i>=0; i--){
-        ll small = l - arr[i];
-        ll big = r - arr[i];
-        ll j,k;
-        for (j=prev_start; j<i; j++){
-            if ((arr[j] >= small) && (arr[j] <= big)){
-                break;
-            }
-        }
-        prev_start = j;
-        for (k = max(prev_end, prev_start); k<=i; k++){
-            if (!( (arr[k] <= big) && (arr[k] >= small))) break;
-        }
-
-        prev_end = min(k, i);
-        cnt += prev_end - prev_start;
-        debug(prev_start, prev_end);
-        debug(cnt);
+    debug(l,r);
+    for (size_t i=0; i<n; i++){
+        std::vector<ll>::iterator a,b;
+        a = upper_bound(arr.begin()+i+1, arr.end(), r-arr[i]);
+        b = lower_bound(arr.begin()+i+1, arr.end(), l-arr[i]);
+        debug(a-arr.begin() ,b-arr.begin());
+        cnt += a -b;
     }
     cout << cnt << endl;
     return;
