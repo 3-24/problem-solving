@@ -60,17 +60,21 @@ template<typename T, typename U> void umax(T& a, U b){if (a < b) a = b;}
 template<typename T>
 bool exist_vector(vector<T> v, T x){return (find(v.begin(), v.end(), x) != v.end()) ? true : false;} // unsorted
 
+struct compare {
+    bool operator()(pair<int, int> a, pair<int, int> b){
+        return a.first > b.first;
+    }
+};
+
 vector<int> dijkstra(int start, int n, vector<vector<pair<int, int>>> graph){
     vector<int> dists(n+1, INT_MAX);
     dists[start] = 0;
-    priority_queue<pair<int, int>> q;
+    priority_queue<pair<int, int>, vector<pair<int, int>>, compare> q;
     q.push(make_pair(0, start));
     while (!q.empty()){
         auto [dist, node] = q.top();
         q.pop();
-        if (dist > dists[node]) continue;
-        assert (dist == dists[node]);
-        for (auto [to_dist, to_node] : graph[node]){
+        for (auto [to_node, to_dist] : graph[node]){
             int new_dist = dist + to_dist;
             if (new_dist < dists[to_node]){
                 dists[to_node] = new_dist;
