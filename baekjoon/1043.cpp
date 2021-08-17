@@ -65,6 +65,20 @@ template<typename T, typename U> void umax(T& a, U b){if (a < b) a = b;}
 template<typename T>
 bool exist_vector(vector<T> v, T x){return (find(v.begin(), v.end(), x) != v.end()) ? true : false;} // unsorted
 
+int parent[100];
+
+int find(int x){
+    if (parent[x] == x) return x;
+    return parent[x] = find(parent[x]);
+}
+
+void merge(int x, int y){
+    x = find(x);
+    y = find(y);
+    if (x == y) return;
+    parent[y] = x;
+}
+
 int main(){
 #ifndef ONLINE_JUDGE
     freopen("input.txt", "r", stdin);
@@ -72,5 +86,65 @@ int main(){
 #else
 #endif
     faster
+    int n,m;
+    cin >> n >> m;
+
+    for (int i=1; i<=n; i++){
+        parent[i] = i;
+    }
+
+    int truth_count;
+    set<int> truth;
+    cin >> truth_count;
+    while(truth_count--){
+        int x;
+        cin >> x;
+        truth.insert(x);
+    }
+
+    debug(truth);
+
+    vector<int> parties[m];
+
+    for (int i=0; i<m; i++){
+        int x;
+        cin >> x;
+        while(x--){
+            int y;
+            cin >> y;
+            parties[i].push_back(y);
+        }
+
+        if (parties[i].size() >= 2){
+            int head = parties[i].front();
+            for (int j=1; j<parties[i].size(); j++){
+                merge(head, parties[i][j]);
+            }
+        }
+    }
+
+    debug_arr(parent, n+1);
+
+    int count = 0;
+
+    set<int> truth_update;
+    for (auto i: truth){
+        truth_update.insert(find(i));
+    }
+
+    debug(truth_update);
+
+    for (int i=0; i<m; i++){
+        if (parties[i].empty()) count++;
+        else {
+            int head = parties[i].front();
+            if (truth_update.find(find(head)) == truth_update.end()){
+                count++;
+            }
+            else {debug(parties[i], parties[i].front(), find(parties[i].front()));}
+        }
+    }
+    debug(count);
+    cout << count;
     return 0;
 }

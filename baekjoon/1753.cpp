@@ -24,16 +24,11 @@ void __print(const T &x) {int f = 0; cerr << '{'; for (auto &i: x) cerr << (f++ 
 void _print() {cerr << "]\n";}
 template <typename T, typename... V>
 void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v...);}
-template<typename T>
-void _print_arr(const T x[], int size) {cerr << '{' ; for (int i=0; i<size; i++) cerr << x[i] << ((i == size-1) ? "" : ","); cerr << "}]" << '\n'; }
-
 
 #ifndef ONLINE_JUDGE
 #define debug(x...) cerr << "[" << #x << "] = ["; _print(x)
-#define debug_arr(x,y) cerr << "[" << #x << "] = ["; _print_arr(x, y)
 #else
 #define debug(x...)
-#define debug_arr(x, y)
 #endif
 
 #define faster  ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
@@ -65,6 +60,34 @@ template<typename T, typename U> void umax(T& a, U b){if (a < b) a = b;}
 template<typename T>
 bool exist_vector(vector<T> v, T x){return (find(v.begin(), v.end(), x) != v.end()) ? true : false;} // unsorted
 
+struct compare {
+    bool operator()(pair<int, int> a, pair<int, int> b){
+        return a.first > b.first;
+    }
+};
+
+vector<int> dijkstra(int start, int n, vector<unordered_map<int, int>> graph){
+    vector<int> dists(n+1, INT_MAX);
+    dists[start] = 0;
+    priority_queue<pair<int, int>, vector<pair<int, int>>, compare> q;
+    q.push(make_pair(0, start));
+    while (!q.empty()){
+        auto [dist, node] = q.top();
+        debug(dist, node);
+        q.pop();
+        if (dist > dists[node]) continue;
+        assert (dist == dists[node]);
+        for (auto [to_node, to_dist] : graph[node]){
+            int new_dist = dist + to_dist;
+            if (new_dist < dists[to_node]){
+                dists[to_node] = new_dist;
+                q.push(make_pair(new_dist, to_node));
+            }
+        }
+    }
+    return dists;
+}
+
 int main(){
 #ifndef ONLINE_JUDGE
     freopen("input.txt", "r", stdin);
@@ -72,5 +95,27 @@ int main(){
 #else
 #endif
     faster
+    int v, e, k;
+    cin >> v >> e >> k;
+    vector<unordered_map<int, int>> graph(v+1, unordered_map<int, int>{});
+    while (e--){
+        int u, v, w;
+        cin >> u >> v >> w;
+        debug(u, v, w);
+        auto m = &graph[u];
+        if (m->find(v) != m->end()){
+            if (m->at(v) <= w) continue;
+        }
+        graph[u][v] = w;
+    }
+
+    debug(graph);
+
+    vector<int> dists = dijkstra(k, v, graph);
+    for (int i=1; i<=v; i++){
+        int d = dists[i];
+        if (d == INT_MAX) cout << "INF\n";
+        else cout << d << '\n';
+    }
     return 0;
 }

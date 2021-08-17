@@ -24,16 +24,11 @@ void __print(const T &x) {int f = 0; cerr << '{'; for (auto &i: x) cerr << (f++ 
 void _print() {cerr << "]\n";}
 template <typename T, typename... V>
 void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v...);}
-template<typename T>
-void _print_arr(const T x[], int size) {cerr << '{' ; for (int i=0; i<size; i++) cerr << x[i] << ((i == size-1) ? "" : ","); cerr << "}]" << '\n'; }
-
 
 #ifndef ONLINE_JUDGE
 #define debug(x...) cerr << "[" << #x << "] = ["; _print(x)
-#define debug_arr(x,y) cerr << "[" << #x << "] = ["; _print_arr(x, y)
 #else
 #define debug(x...)
-#define debug_arr(x, y)
 #endif
 
 #define faster  ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
@@ -65,6 +60,21 @@ template<typename T, typename U> void umax(T& a, U b){if (a < b) a = b;}
 template<typename T>
 bool exist_vector(vector<T> v, T x){return (find(v.begin(), v.end(), x) != v.end()) ? true : false;} // unsorted
 
+int solve(int N, int r, int c){
+    if (N == 0) return 0;
+    int limit = 1 << (N-1);
+    debug(N, r, c, limit);
+    int unit = limit*limit;
+    if (r >= limit){
+        if (c >= limit){
+            return 3*unit + solve(N-1, r-limit, c-limit);
+        } else return 2*unit + solve(N-1, r-limit, c);
+    } else{
+        if (c >= limit) return unit + solve(N-1, r, c-limit);
+        else return solve(N-1, r, c);
+    }
+}
+
 int main(){
 #ifndef ONLINE_JUDGE
     freopen("input.txt", "r", stdin);
@@ -72,5 +82,9 @@ int main(){
 #else
 #endif
     faster
+    int N,r,c;
+    cin >> N >> r >> c;
+    cout << solve(N, r, c);
+
     return 0;
 }
