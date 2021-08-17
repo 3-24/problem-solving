@@ -65,6 +65,52 @@ template<typename T, typename U> void umax(T& a, U b){if (a < b) a = b;}
 template<typename T>
 bool exist_vector(vector<T> v, T x){return (find(v.begin(), v.end(), x) != v.end()) ? true : false;} // unsorted
 
+void solve(){
+    int n, m, w;
+    cin >> n >> m >> w;
+    debug(n, m, w);
+    // Floyd-Warshall
+    vector<vector<int>> dists(n+1, vector<int>(n+1, INT_MAX));
+    for (int i=1; i<=n; i++){
+        dists[i][i] = 0;
+    }
+
+    while(m--){
+        int s, e, t;
+        cin >> s >> e >> t;
+        dists[s][e] = min(dists[s][e], t);
+        dists[e][s] = min(dists[s][e], t);
+    }
+
+    while (w--) {
+        int s, e, t;
+        cin >> s >> e >> t;
+        dists[s][e] = min(dists[s][e], -t);
+    }
+
+    debug(dists);
+
+    for (int i=1; i<=n; i++){
+        for (int j=1; j<=n; j++){
+            for (int k=1; k<=n; k++){
+                debug(i, j, k, n);
+                if (dists[i][k] == INT_MAX || dists[k][j] == INT_MAX){}
+                else dists[i][j] = min(dists[i][j], dists[i][k] + dists[k][j]);
+            }
+        }
+    }
+
+    for (int i=1; i<=n; i++){
+        if (dists[i][i] < 0 ){
+            cout << "YES\n";
+            return;
+        }
+    }
+    cout << "NO\n";
+    return;
+}
+
+
 int main(){
 #ifndef ONLINE_JUDGE
     freopen("input.txt", "r", stdin);
@@ -72,5 +118,10 @@ int main(){
 #else
 #endif
     faster
+    int tc;
+    cin >> tc;
+    while (tc--){
+        solve();
+    }
     return 0;
 }

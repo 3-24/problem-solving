@@ -65,6 +65,38 @@ template<typename T, typename U> void umax(T& a, U b){if (a < b) a = b;}
 template<typename T>
 bool exist_vector(vector<T> v, T x){return (find(v.begin(), v.end(), x) != v.end()) ? true : false;} // unsorted
 
+int v;
+
+pair<int, int> find_max_node(int node, vector<vector<pair<int, int>>>arr){
+    int dists[v+1];
+    int visited[v+1] = {0, };
+    dists[node] = 0;
+    queue<int> q;
+    q.push(node);
+    int max_node = node;
+    int max_dist = 0;
+    visited[node] =true;
+    while (!q.empty()){
+        int node = q.front();
+        q.pop();
+        for (auto p: arr[node]){
+            int to_node = p.first;
+            if (visited[to_node]) continue;
+            int to_distance = p.second;
+            dists[to_node] = to_distance + dists[node];
+            if (dists[to_node] > max_dist){
+                max_dist = dists[to_node];
+                max_node = to_node;
+            }
+            visited[to_node] = true;
+            q.push(to_node);
+        }
+    }
+
+    return make_pair(max_node, max_dist);
+}
+
+
 int main(){
 #ifndef ONLINE_JUDGE
     freopen("input.txt", "r", stdin);
@@ -72,5 +104,28 @@ int main(){
 #else
 #endif
     faster
+    cin >> v;
+    vector<vector<pair<int, int>>>arr(v+1, (vector<pair<int, int>>){});
+    debug(arr);
+
+    for (int i=0; i<v; i++){
+        int node;
+        cin >> node;
+        while (true){
+            int to_node;
+            cin >> to_node;
+            if (to_node == -1) break;
+            int length;
+            cin >> length;
+            arr[node].push_back(make_pair(to_node, length));
+        }
+    }
+
+    debug(arr);
+
+    pair<int, int> p1 = find_max_node(1, arr);
+    pair<int, int> p2 = find_max_node(p1.first, arr);
+    cout << p2.second;
+
     return 0;
 }
