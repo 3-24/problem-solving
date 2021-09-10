@@ -1,7 +1,6 @@
 *.xml
 *.bin
 *.exe
-*.txt
 *.dll
 *.pptx
 cmake-build-debug/
