@@ -1,55 +1,50 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+char s[1000001];
+char bomb[37];
+int bomb_indices[1000001];
+
 int main(){
-    string s, bomb;
-    cin >> s;
-    cin >> bomb;
-    deque<int> bomb_indices;
+    scanf("%s\n%s", s, bomb);
+    int s_len = strlen(s);
+    int bomb_len = strlen(bomb);
     int bomb_index = 0;
-    bool is_empty = true;
-    for (int i=0; i<s.length(); i++){
-        if (s[i] == bomb[bomb_index]){
-            bomb_indices.push_back(bomb_index);
-            bomb_index += 1;
-        }
-        else if (s[i] == bomb[0]){
-            bomb_indices.push_back(0);
+    int bomb_indices_index = 0;
+    bool printed = false;
+    for (int s_index=0; s_index<s_len; s_index++){
+        if (s[s_index] == bomb[bomb_index]) bomb_indices[bomb_indices_index++] = bomb_index++;
+        else if (s[s_index] == bomb[0]){
+            bomb_indices[bomb_indices_index++] = 0;
             bomb_index = 1;
         }
-        
         else {
-            if (!bomb_indices.empty()){
-                for (auto i: bomb_indices){
-                    cout << bomb[i];
+            if (bomb_indices_index != 0){
+                for (int i=0; i<bomb_indices_index; i++){
+                    printf("%c", bomb[bomb_indices[i]]);
                 }
-                bomb_indices.clear();
+                bomb_indices_index = 0;
                 bomb_index = 0;
             }
-            cout << s[i];
-            is_empty = false;
+            printf("%c", s[s_index]);
+            printed = true;
             continue;
         }
 
-        if (bomb_index == bomb.length()){
-            for (int j=0; j<bomb.length(); j++){
-                bomb_indices.pop_back();
-            }
-            if (bomb_indices.empty()){
-                bomb_index = 0;
-            }
-            else {
-                bomb_index = bomb_indices.back()+1;
-            }
+        if (bomb_index == bomb_len){
+            bomb_indices_index -= bomb_len;
+            if (bomb_indices_index == 0) bomb_index = 0;
+            else bomb_index = bomb_indices[bomb_indices_index-1]+1;
         }
     }
-    if (!bomb_indices.empty()){
-        is_empty = false;
-        for (auto i: bomb_indices){
-            cout << bomb[i];
+
+    if (bomb_indices_index != 0){
+        for (int i=0; i<bomb_indices_index; i++){
+            printf("%c", bomb[bomb_indices[i]]);
         }
+        printed = true;
     }
-    if (is_empty) cout << "FRULA";
+    if (!printed) cout << "FRULA";
     cout << "\n";
     return 0;
 }
