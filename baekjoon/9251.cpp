@@ -15,11 +15,11 @@ int main() {
     }
     for (int i=1;i<=a;i++){
         for (int j=1;j<=b;j++){
-            int k;
-            for (k=i;k>=1;k--){
-                if (s1[k-1] == s2[j-1]) break;
+            int& x = resultArr[i][j];
+            if (s1[i-1] == s2[j-1]){
+                x = max(x, resultArr[i-1][j-1]+1);
             }
-            resultArr[i][j] = (k == 0 ? resultArr[i][j-1] : max(resultArr[i][j-1], resultArr[k-1][j-1]+1));
+            x = max(max(x, resultArr[i-1][j]), resultArr[i][j-1]);
         }
     }
     cout << resultArr[a][b];
