@@ -4,37 +4,46 @@
 using namespace std;
 
 int n;
+// dp[i][j] is cost to visit all nodes and return to 0.
+int dp[16][1 << 17];    // -1: unexplored, >=0: visited and feasible, -2: infeasible
 int adj[16][16];
-int visited[16];
-int min_cost = INT_MAX;
 
-void dfs(int i, int explored, int cost){
-    if (cost >= min_cost) return;
-    
-    if (explored == n){
-        if (adj[i][0] != 0) min_cost = min(min_cost, cost + adj[i][0]);
-        return;
+int dfs(int i, int explored){
+    if (dp[i][explored] == -1){
+        int min_cost = INT_MAX;
+        for (int j=0; j<n; j++){
+            if (explored & (1 << j) || adj[i][j] == 0) continue;
+            int cost = dfs(j, explored | (1 << j));
+            if (cost == -2) continue;
+            min_cost = min(cost+adj[i][j], min_cost);
+        }
+        if (min_cost == INT_MAX){
+            dp[i][explored] = -2;
+        } else{
+            dp[i][explored] = min_cost;
+        }
     }
-
-    for (int next=0; next<n; next++){
-        if (adj[i][next] == 0 || visited[next]) continue;
-        visited[next] = true;
-        dfs(next, explored+1, cost + adj[i][next]);
-        visited[next] = false;
-    }
-    return;
+    return dp[i][explored];
 }
 
 int main(){
     faster
     cin >> n;
+
+    for (int i=0; i<n; i++){
+        memset(dp[i], -1, sizeof(dp[i]));
+    }
     for (int i=0; i<n; i++){
         for (int j=0; j<n; j++){
             cin >> adj[i][j];
         }
+        if (i != 0){
+            dp[i][(1 << n) -1] = -2;
+        } else {
+            dp[i][(1 << n) - 1] = 0;
+        }
     }
-    visited[0] = true;
-    dfs(0, 1, 0);
-    cout << min_cost;
+
+    cout << dfs(0, 0);
     return 0;
 }
