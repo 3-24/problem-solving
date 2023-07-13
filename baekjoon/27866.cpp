@@ -4,7 +4,7 @@ using namespace std;
 char S[1001];
 int n;
 
-int main(){
+int main() {
     scanf("%s", S);
     scanf("%d", &n);
     printf("%c\n", S[n - 1]);

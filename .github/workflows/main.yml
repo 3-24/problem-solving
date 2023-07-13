@@ -24,6 +24,7 @@ jobs:
         id: git-diff
         run: |
           problem=$(git diff-tree --no-commit-id --name-only -r HEAD | grep '.cpp' | sed 's/.cpp//g' | xargs)
+          echo $problem
           if [[ -n "$problem" ]]; then
             clang++ -std=c++20 -fsanitize=address -o "$problem" "$problem".cpp
             result=$(python3 test.py $problem)
