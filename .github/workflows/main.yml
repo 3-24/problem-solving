@@ -1,4 +1,4 @@
-name: C++ Test and Format
+name: C++ Test
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
       - name: Install Clang
         run: sudo apt-get install -y clang
 
-      - name: Get the modified C++ file
+      - name: Test C++ file
         id: git-diff
         run: |
           problem=$(git diff --name-only --diff-filter=d origin/main...HEAD | grep '.cpp' | sed 's/.cpp//g' | xargs)
