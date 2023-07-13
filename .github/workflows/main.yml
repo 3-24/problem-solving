@@ -23,7 +23,7 @@ jobs:
       - name: Get the modified C++ file
         id: git-diff
         run: |
-          problem=$(git diff --name-only --diff-filter=d origin/main...HEAD | grep '.cpp' | sed 's/.cpp//g')
+          problem=$(git diff --name-only --diff-filter=d origin/main...HEAD | grep '.cpp' | sed 's/.cpp//g' | xargs)
           if [[ -n "$problem" ]]; then
             echo "problem=$(problem)" >> $GITHUB_ENV
           else
