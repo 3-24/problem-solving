@@ -14,7 +14,7 @@ for testcase in testcases:
     tc_out = testcase[out_idx+5:]
     
     # Feed target with input and check if output is correct
-    out = sp.run(target, input=tc_in, shell=True, stdout=sp.PIPE)
+    out = sp.run(problem, input=tc_in, shell=True, stdout=sp.PIPE)
     if (tc_out.strip() == out.stdout.strip()):
         print("PASS")
     else:
