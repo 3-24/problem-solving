@@ -25,24 +25,17 @@ jobs:
         run: |
           problem=$(git diff --name-only --diff-filter=d origin/main...HEAD | grep '.cpp' | sed 's/.cpp//g' | xargs)
           if [[ -n "$problem" ]]; then
-            echo "problem=$(problem)" >> $GITHUB_ENV
+            clang++ -std=c++20 -fsanitize=address -o "$problem" "$problem".cpp
+            result=$(python3 test.py $problem)
+            echo "$result"
+            if [[ $result == "FAIL" ]]; then
+              echo "Tests failed"
+              exit 1
+            else
+              echo "All tests passed"
+            fi
           else
-            echo "No C++ file to process"
+            # Success github actions early
+            echo "No C++ file modified"
             exit 0
-          fi
-
-      - name: Compile
-        run: |
-          clang++ -std=c++20 -fsanitize=address -o "${{ env.problem }}" "${{ env.problem }}".cpp
-
-      - name: Run test and check results
-        id: test
-        run: |
-          result=$(python3 test.py "${{ env.problem }})"
-          echo "$result"
-          if [[ $result == "FAIL" ]]; then
-            echo "Tests failed"
-            exit 1
-          else
-            echo "All tests passed"
           fi
