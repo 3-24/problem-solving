@@ -23,8 +23,8 @@ jobs:
       - name: Test C++ file
         id: git-diff
         run: |
-          problem=$(git diff-tree --no-commit-id --name-only -r HEAD | grep '.cpp' | sed 's/.cpp//g' | xargs)
-          echo $(git diff-tree --no-commit-id --name-only -r HEAD)
+          problem=$(git diff --name-only --diff-filter=AM HEAD^1...HEAD | grep '.cpp' | sed 's/.cpp//g' | xargs)
+          echo $(git diff --name-only --diff-filter=AM HEAD^1...HEAD)
           if [[ -n "$problem" ]]; then
             clang++ -std=c++20 -fsanitize=address -o "$problem" "$problem".cpp
             result=$(python3 test.py $problem)

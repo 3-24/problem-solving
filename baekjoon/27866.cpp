@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// ^_^
+// ^_^;
 
 char S[1001];
 int n;
