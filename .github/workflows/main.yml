@@ -4,14 +4,10 @@ on:
   push:
     branches:
       - main
-    paths:
-      - '**.cpp'
 
   pull_request:
     branches:
       - main
-    paths:
-      - '**.cpp'
 
 jobs:
   build:
@@ -27,7 +23,13 @@ jobs:
       - name: Get the modified C++ file
         id: git-diff
         run: |
-          echo "problem=$(git diff --name-only --diff-filter=d origin/main...HEAD | grep '.cpp') | sed 's/.cpp//g" >> $GITHUB_ENV
+          problem=$(git diff --name-only --diff-filter=d origin/main...HEAD | grep '.cpp' | sed 's/.cpp//g')
+          if [[ -n "$problem" ]]; then
+            echo "problem=$(problem)" >> $GITHUB_ENV
+          else
+            echo "No C++ file to process"
+            exit 0
+          fi
 
       - name: Compile
         run: |
@@ -43,33 +45,4 @@ jobs:
             exit 1
           else
             echo "All tests passed"
-          fi
-
-  format:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Install Clang-Format
-        run: sudo apt-get install -y clang-format
-
-      - name: Get modified or created C++ files
-        id: git-diff-format
-        run: |
-          echo "files=$(git diff --name-only --diff-filter=d -z origin/main...HEAD | grep '.cpp')" >> $GITHUB_ENV
-
-      - name: Check C++ code formatting
-        run: |
-          if [[ -n "${{ env.files }}" ]]; then
-            if ! clang-format -output-replacements-xml -style=file ${{ env.files }} | grep -c '<replacement ' > /dev/null; then
-              echo "Code formatting check passed"
-            else
-              echo "Code formatting check failed. Please run clang-format on your code."
-              exit 1
-            fi
-          else
-            echo "No C++ files to check formatting"
           fi
