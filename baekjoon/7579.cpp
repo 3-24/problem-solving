@@ -6,15 +6,15 @@ int N, M;
 int mem[128];
 int cost[128];
 
-map<int, int> dp[128];
+int dp[128][10001];
 
-int step(int i, int m){
-    if (m <= 0) return 0;
-    if (i >= N) return 10001;
-    if (!dp[i].contains(i)){
-        dp[i][m] = min(step(i+1, m), cost[i]+step(i+1, m - mem[i]));
+int step(int i, int c){
+    if (c < 0) return INT_MIN;
+    if (i == N) return 0;
+    if (dp[i][c] == 0) {
+        dp[i][c] = max(step(i+1, c), mem[i] + step(i+1, c - cost[i]));
     }
-    return dp[i][m];
+    return dp[i][c];
 }
 
 int main(){
@@ -26,11 +26,17 @@ int main(){
     for (int i=0; i<N; i++){
         cin >> mem[i];
     }
-
+    int max_cost = 0;
     for (int i=0; i<N; i++){
         cin >> cost[i];
+        max_cost += cost[i];
     }
 
-    cout << step(0, M);
+    for (int c=0; c<=max_cost; c++){
+        if (step(0,c) >= M){
+            cout << c;
+            break;
+        }
+    }
     return 0;
 }
