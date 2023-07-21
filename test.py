@@ -1,7 +1,14 @@
 import sys
 import subprocess as sp
+import os
 
 problem = sys.argv[1]
+
+test_file = f"{problem}.test"
+
+# Check if test file exist
+if (not os.path.isfile(test_file)):
+    exit(0)
 
 with open(f"{problem}.test", 'rb') as f:
     content = f.read()
