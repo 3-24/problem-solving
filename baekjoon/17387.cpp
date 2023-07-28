@@ -5,9 +5,7 @@ typedef long long int lld;
 
 uint8_t cross_product(lld dx1, lld dy1, lld dx2, lld dy2){
     lld prod = dx1 * dy2 - dx2 * dy1;
-    if (prod > 0) return 1;
-    else if (prod < 0) return -1;
-    else return 0;
+    return (prod > 0) - (prod < 0);
 }
 
 uint8_t ccw(int x1, int y1, int x2, int y2, int x3, int y3){
