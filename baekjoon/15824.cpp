@@ -30,12 +30,12 @@ int main(){
 
     ll count = 0;
 
-    for (int i=0; i<arr.size(); i++){
+    for (size_t i=0; i<arr.size(); i++){
         int pred = i;
         int succ = arr.size() - 1 - i;
         ll x = arr[i] % MOD;
-        count += x * ((pow_mod[pred] - pow_mod[succ]));
-        count %= MOD;
+        count += x * ((pow_mod[pred] - pow_mod[succ]) % MOD);
+        count = (count + MOD) % MOD;
     }
 
     cout << count;
