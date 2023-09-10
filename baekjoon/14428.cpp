@@ -7,6 +7,8 @@ using namespace std;
 int n;
 pair<int, int> segtree[MAX_N*2 + 1];
 
+// #segment-tree
+
 bool cmp(pair<int, int> &a, pair<int, int> &b){
     if (b.first < a.first) return true;
     else if (b.first == a.first && b.second < a.second) return true;
