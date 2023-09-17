@@ -1,0 +1,39 @@
+IN:
+3 4 12
+RGB
+.@..
+.##.
+.##.
+....
+jJRRJjjDDjDJ
+OUT:
+....
+.RB.
+.BB.
+...@
+
+IN:
+7 5 17
+UTILCUP
+.@...
+.#.#.
+...#.
+##.##
+##...
+JjjUUJRJLLJJjjjjJ
+OUT:
+@....
+.U.U.
+...#.
+UU.##
+U#...
+
+IN:
+4 2 10
+ABCD
+@#
+##
+JJJJDJjjjJ
+OUT:
+@B
+BB
