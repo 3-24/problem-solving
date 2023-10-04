@@ -1,65 +1,49 @@
-#include <stdio.h>
+#include <bits/stdc++.h>
+
+using namespace std;
 
 int main(){
-  int positiveCount[4001],negativeCount[4001],i,n,d;
-  scanf("%d",&n);
-  for (i=0;i<4001;i++){
-    positiveCount[i] = 0;
-    negativeCount[i] = 0;
-  }
-  for (i=0;i<n;i++){
-    scanf("%d",&d);
-    d >= 0 ? positiveCount[d]++ : negativeCount[-d]++;
-  }
-  int min=4001,max=-4001,index=0,is_initial = 1,median,mode,mode_val=0,mode_count = 0;
-  float sum=0;
-  for (i=4000;i>0;i--){
-    sum += -i*negativeCount[i];
-    index += negativeCount[i];
-    if (is_initial && index >= (n+1)/2){
-      median = -i;
-      is_initial = 0;
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    int N;
+    cin >> N;
+    vector<int> num(N, 0);
+    map<int, int> count;
+    int mean = 0;
+    for (int i=0; i<N; i++){
+        cin >> num[i];
+        if (count.contains(num[i])){
+            count[num[i]] += 1;
+        } else {
+            count[num[i]] = 1;
+        }
+        mean += num[i];
     }
-    if (mode_val < negativeCount[i]){
-      mode = -i;
-      mode_val = negativeCount[i];
-      mode_count = 0;
-    }
-    else if (mode_val == negativeCount[i]){
-      mode_count++;
-      if (mode_count == 1){
-        mode = -i;
-      }
-    }
-    if (negativeCount[i]){
-      if (-i > max){max = -i;}
-      if (-i < min){min = -i;}
-    }
-  }
 
-  for (i=0;i<4001;i++){
-    sum += i * positiveCount[i];
-    index += positiveCount[i];
-    if (is_initial && index >= (n+1)/2){
-      median = i;
-      is_initial = 0;
+
+    mean = (int)(round((float)mean / N));
+
+    cout << mean << '\n';
+    
+    sort(num.begin(), num.end());
+    
+    cout << num[N >> 1] << '\n';
+    
+    vector<pair<int, int>> count_sort;
+    for (auto [n, c]: count){
+        count_sort.push_back({-c, n});
     }
-    if (mode_val < positiveCount[i]){
-      mode = i;
-      mode_val = positiveCount[i];
-      mode_count = 0;
+    
+    sort(count_sort.begin(), count_sort.end());
+
+    if (N == 1) cout << num[0] << '\n';
+    else {
+        if (count_sort[0].first == count_sort[1].first){
+            cout << count_sort[1].second << '\n';
+        } else {
+            cout << count_sort[0].second << '\n';
+        }
     }
-    else if (mode_val == positiveCount[i]){
-      mode_count++;
-      if (mode_count == 1){
-        mode = i;
-      }
-    }
-    if (positiveCount[i]){
-      if (i > max){max = i;}
-      if (i < min){min = i;}
-    }
-  }
-  printf("%.f\n%d\n%d\n%d",sum/n,median,mode,max-min);
-  return 0;
+
+    cout << num[N-1] - num[0] << '\n';
 }
