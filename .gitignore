@@ -9,4 +9,4 @@ cmake-build-debug/
 main.cpp
 .vscode/
 a.out
-BOJ/a.out
+*/bin/*
