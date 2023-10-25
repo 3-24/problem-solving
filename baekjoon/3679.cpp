@@ -16,7 +16,6 @@ int ccw(Point &a, Point &b, Point &c) {
     ll y1 = b.y - a.y;
     ll x2 = c.x - a.x;
     ll y2 = c.y - a.y;
-
     return (x1 * y2 - x2 * y1);
 }
 
