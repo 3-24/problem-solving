@@ -7,7 +7,7 @@ struct Point {
     ll i, x, y;
 };
 
-bool operator<(Point &a, Point &b){
+bool operator<(Point &a, Point &b) {
     return (a.x == b.x ? (a.y < b.y) : (a.x < b.x));
 }
 
@@ -19,7 +19,6 @@ int ccw(Point &a, Point &b, Point &c) {
 
     return (x1 * y2 - x2 * y1);
 }
-
 
 void solve() {
     int n;
@@ -33,20 +32,24 @@ void solve() {
 
     swap(points[0], *min_element(points.begin(), points.end()));
 
-    sort(points.begin()+1, points.end(), [&points](Point &a, Point &b) {
+    sort(points.begin() + 1, points.end(), [&points](Point &a, Point &b) {
         ll c = ccw(points[0], a, b);
-        if (c == 0) return (a < b);
-        else return (c > 0);
+        if (c == 0)
+            return (a < b);
+        else
+            return (c > 0);
     });
 
-    int pt = n-1;
-    for (int i=n-1; i>=1; i--){
-        if (ccw(points[0], points[i], points[i-1]) == 0) pt--;
-        else break;
+    int pt = n - 1;
+    for (int i = n - 1; i >= 1; i--) {
+        if (ccw(points[0], points[i], points[i - 1]) == 0)
+            pt--;
+        else
+            break;
     }
-    reverse(points.begin()+pt, points.end());
-    
-    for (Point &p: points){
+    reverse(points.begin() + pt, points.end());
+
+    for (Point &p : points) {
         cout << p.i << ' ';
     }
     cout << '\n';
