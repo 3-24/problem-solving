@@ -20,15 +20,19 @@ jobs:
           fetch-depth: 0
 
       - name: Install Clang
-        run: sudo apt-get update && sudo apt-get install -y git clang
+        run: |
+          if ! [ -x "$(command -v sudo)" ]; then
+            apt-get update
+            apt-get install -y sudo
+          fi
+          sudo apt-get update && sudo apt-get install -y git clang
 
       - name: Test C++ files
         run: |
           for commit in $(git rev-list ${{ github.base_ref }}..${{ github.head_ref }}); do
-            problem=$(git diff --name-only --diff-filter=AM $commit^1...$commit | grep '.cpp' | sed 's/.cpp//g' | xargs)
-            echo $(git diff --name-only --diff-filter=AM HEAD^1...HEAD)
-            if [[ -n "$problem" ]]; then
-              clang++ -std=c++20 -fsanitize=address -o "$problem" "$problem".cpp
+            for problem in $(git diff --name-only --diff-filter=AM $commit^1...$commit | grep '.cpp' | xargs); do
+              bin_file=bin/`echo $problem | sed 's/.cpp//g'`
+              clang++ -std=c++20 -fsanitize=address -o $bin_file $problem
               result=$(python3 test.py $problem)
               echo "$result"
               if [[ $result == "FAIL" ]]; then
@@ -37,9 +41,5 @@ jobs:
               else
                 echo "All tests passed"
               fi
-            else
-              # Success github actions early
-              echo "No C++ file modified"
-              exit 0
-            fi
+            done
           done

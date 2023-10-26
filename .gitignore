@@ -10,3 +10,5 @@ main.cpp
 .vscode/
 a.out
 */bin/*
+bin
+__pycache__
