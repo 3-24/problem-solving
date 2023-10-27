@@ -14,6 +14,7 @@ Custom interactive shell for algorithmic problem-solving to easily do compilatio
 Following example shows simple use case that loads specific source code and testing it.
 
 ```
+Welcome to the matwaeteul shell. Type the filename to start. (Ex. ./baekjoon/1092.cpp)
 > baekjoon/13907.cpp
 baekjoon/13907.cpp > code
 (vscode windows are opened and write the source code and test cases)
