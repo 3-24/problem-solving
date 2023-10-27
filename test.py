@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 
 def test(file):
-    test_file = f"{file}.test"
+    test_file = file.with_suffix(".test")
     test_bin = Path("bin") / file.with_suffix("")
     
     # Check if test file exist
@@ -28,7 +28,7 @@ def test(file):
         tc_out = testcase[out_idx + 5 :].strip()
 
         # Feed target with input and check if output is correct
-        out = sp.run(test_bin, input=tc_in, shell=True, stdout=sp.PIPE)
+        out = sp.run(test_bin, input=tc_in, stdout=sp.PIPE)
 
         actual_out = b"\n".join(map(lambda x: x.strip(), out.stdout.strip().split(b"\n")))
 
