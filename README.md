@@ -5,7 +5,7 @@ Collection of my algorithmic problem-solving challenges!
 ![profile1](http://mazassumnida.wtf/api/v2/generate_badge?boj=uncertainty)
 ![profile2](http://mazandi.herokuapp.com/api?handle=uncertainty&theme=warm)
 
-## MatWaeTul (맞왜틀)
+## MatWaeTeul (맞왜틀)
 
 Custom interactive shell for algorithmic problem-solving to easily do compilation, execution, and testing.
 
