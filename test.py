@@ -21,6 +21,7 @@ def test(file):
 
     testcases = content.split(b"\n\n")
 
+    passed = True
     for testcase in testcases:
         assert testcase.startswith(b"IN:\n")
         out_idx = testcase.find(b"OUT:\n")
@@ -34,11 +35,16 @@ def test(file):
 
         if tc_out == actual_out:
             print("PASS")
-            return 0
         else:
             print("FAIL")
-            return 1
+            passed = False
+    if passed:
+        print("All test passed.")
+        return 0
+    else:
+        print("Some test failed.")
+        return 1
 
 if __name__ == '__main__':
     problem = sys.argv[1]
-    test(Path(problem))
+    exit(test(Path(problem)))

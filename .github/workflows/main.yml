@@ -33,13 +33,9 @@ jobs:
             for problem in $(git diff --name-only --diff-filter=AM $commit^1...$commit | grep '.cpp' | xargs); do
               bin_file=bin/`echo $problem | sed 's/.cpp//g'`
               clang++ -std=c++20 -fsanitize=address -o $bin_file $problem
-              result=$(python3 test.py $problem)
-              echo "$result"
-              if [[ $result == "FAIL" ]]; then
-                echo "Tests failed"
+              python3 test.py $problem
+              if [[ $? -ne 0 ]]; then
                 exit 1
-              else
-                echo "All tests passed"
               fi
             done
           done
