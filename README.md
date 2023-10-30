@@ -31,9 +31,10 @@ baekjoon/13907.cpp > quit
 
 ### Installation
 
-To use it, you need Python 3.8 and install following library.
+To use it, you need Python 3.8 and install the dependent libraries.
+
 ```bash
-pip install prompt_toolkit
+pip install -r requirements.txt
 ```
 
 Then, run it with

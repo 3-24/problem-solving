@@ -5,6 +5,8 @@ from pathlib import Path
 from test import test
 import subprocess as sp
 import prompt_toolkit as pt
+import urllib3
+from bs4 import BeautifulSoup
 
 root = Path(__file__).parent.absolute()
 
@@ -55,6 +57,44 @@ def compile_if_recent(func):
         return 0
 
     return inner
+
+def scrap_test(file):
+    # Get problem number
+    problem_number = file.stem
+    # Get problem url
+    if file.parent.name == "baekjoon":
+        problem_url = f"https://www.acmicpc.net/problem/{problem_number}"
+    else:
+        print("Not supported problem")
+        return None
+
+    # Get problem page
+    http = urllib3.PoolManager()
+    r = http.request("GET", problem_url, headers={"User-Agent": "Mozilla/5.0"})
+    soup = BeautifulSoup(r.data, "html.parser")
+    
+    samples = list(map(lambda x: x.text, soup.findAll("pre", {"class": "sampledata"})))
+    
+    for i in range(0, len(samples), 2):
+        add_testcase(file, samples[i], samples[i+1])
+
+def add_testcase(file, input, output):
+    test_file = file.with_suffix(".test")
+    
+    with open(test_file, "rb") as f:
+        if f.read().endswith(b"\n"):
+            linebreak_end = True
+        else:
+            linebreak_end = False
+    with open(test_file, "ab") as f:
+        if not linebreak_end:
+            f.write(b"\n")
+        f.write(b"\n")
+        f.write(b"IN:\n")
+        f.write(input.encode())
+        f.write(b"OUT:\n")
+        f.write(output.encode())
+    
 
 
 def path_ignore(filename):
@@ -128,7 +168,7 @@ class MatWaeTeulShell:
 
     def do_scrap_test(self):
         print("Scraping test...")
-        # TODO
+        scrap_test(self.file)
 
     @compile_if_recent
     def do_test(self):
