@@ -5,7 +5,7 @@ Collection of my algorithmic problem-solving challenges!
 ![profile1](http://mazassumnida.wtf/api/v2/generate_badge?boj=uncertainty)
 ![profile2](http://mazandi.herokuapp.com/api?handle=uncertainty&theme=warm)
 
-## MatWaeTul (맞왜틀)
+## MatWaeTeul (맞왜틀)
 
 Custom interactive shell for algorithmic problem-solving to easily do compilation, execution, and testing.
 
@@ -14,6 +14,7 @@ Custom interactive shell for algorithmic problem-solving to easily do compilatio
 Following example shows simple use case that loads specific source code and testing it.
 
 ```
+Welcome to the matwaeteul shell. Type the filename to start. (Ex. ./baekjoon/1092.cpp)
 > baekjoon/13907.cpp
 baekjoon/13907.cpp > code
 (vscode windows are opened and write the source code and test cases)
