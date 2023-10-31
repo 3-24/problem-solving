@@ -29,7 +29,7 @@ jobs:
 
       - name: Test C++ files
         run: |
-          for commit in $(git rev-list ${{ github.base_ref }}..${{ github.head_ref }}); do
+          for commit in $(git rev-list ${{ env.github_base_ref }}..${{ env.github_head_ref }}); do
             for problem in $(git diff --name-only --diff-filter=AM $commit^1...$commit | grep '.cpp' | xargs); do
               bin_file=bin/`echo $problem | sed 's/.cpp//g'`
               clang++ -std=c++20 -fsanitize=address -o $bin_file $problem
