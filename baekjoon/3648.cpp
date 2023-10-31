@@ -53,6 +53,8 @@ int main(){
             graph[y ^ 1].push_back(x);
         }
 
+        graph[1].push_back(0);
+
         for (int i=0; i<2*n; i++){
             if (!discovered[i]) do_scc(i);
         }
@@ -62,27 +64,6 @@ int main(){
             if (scc[i] == scc[i+1]){
                 success = false;
                 break;
-            }
-        }
-        
-        if (success){
-            stack<int> dfs_st;
-            vector<bool> visited(2*n, false);
-            dfs_st.push(0);
-            visited[0] = true;
-            while (!dfs_st.empty()){
-                int t = dfs_st.top();
-                dfs_st.pop();
-                for (int next: graph[t]){
-                    if (!visited[next]){
-                        if (next == 1){
-                            success = false;
-                            break;
-                        }
-                        visited[next] = true;
-                        dfs_st.push(next);
-                    }
-                }
             }
         }
 
