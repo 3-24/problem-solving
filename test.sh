@@ -1,12 +1,12 @@
 #!/bin/bash
 count=0
-success=1
+fail=0
 for problem in $(find ./baekjoon -name "*.cpp"); do
     {
         python3 test.py $problem 
         if [[ $? -ne 0 ]]; then
             echo "[FAIL] $problem"
-            success=0
+            fail=1
         else
             echo "[PASS] $problem"
         fi
@@ -15,9 +15,9 @@ for problem in $(find ./baekjoon -name "*.cpp"); do
     if [[ $((count%$(nproc))) -eq 0 ]]; then
         wait
     fi
-    if [[ $success -eq 0 ]]; then
+    if [[ $fail -eq 1 ]]; then
         exit 1
     fi
 done
 wait
-exit $success
+exit $fail
