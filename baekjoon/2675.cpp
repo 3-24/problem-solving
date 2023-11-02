@@ -3,7 +3,7 @@
 void repeat(void){
   char arr[21];
   int num;
-  scanf("%d %s",&num,&arr);
+  scanf("%d %s",&num, arr);
   int i = 0;
   while(1){
     char c = arr[i];
