@@ -34,7 +34,7 @@ class MatWaeTeulUnit:
             if self.debug:
                 compile_cmd = f"clang++ -stdlib=libc++ -std=c++20 -fsanitize=address -O0 -g -Werror -DONLINE_JUDGE {self.src} -o {self.bin}"
             else:
-                compile_cmd = f"g++ -O2 -Wall -lm -static -std=gnu++20 -DONLINE_JUDGE {self.src} -o {self.bin}"
+                compile_cmd = f"g++ -O2 -Wall -lm -std=gnu++20 -DONLINE_JUDGE {self.src} -o {self.bin}"
             print_verbose(verbose, compile_cmd)
             
             compile_cmd = compile_cmd.split(" ")
