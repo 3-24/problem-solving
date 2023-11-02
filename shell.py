@@ -76,8 +76,8 @@ class MatWaeTeulShell:
             self.cmdloop()
 
     def do_code(self):
-        os.system(f"code {self.file}")
-        os.system(f"code {self.file.with_suffix('.test')}")
+        os.system(f"code {self.file.src}")
+        os.system(f"code {self.file.suite}")
 
     def do_scrap(self):
         print("Scraping test...")
