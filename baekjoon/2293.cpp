@@ -7,7 +7,7 @@ int main() {
     int n,k; // 1 <= n <= 100, 1 <= k <= 10000
     cin >> n >> k;
     vector<int> Value;
-    int resultArr[k+1] = {1,};
+    int resultArr[10001] = {1,};
     int t;
     for (int i=0;i<n;i++){
         cin >> t;

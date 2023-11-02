@@ -6,11 +6,6 @@ int from_count[32002];
 
 int main(){
     ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
-#ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-#else
-#endif
     int n, m;
     cin >> n >> m;
     unordered_set<int> root_nodes;

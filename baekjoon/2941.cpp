@@ -31,7 +31,7 @@ int checkcroatic(int n, char a[]){
 
 int main(){
   char arr[105];
-  scanf("%s",&arr);
+  scanf("%s", arr);
   int count = 0;
   int i = 0;
   while (arr[i] != '\0'){

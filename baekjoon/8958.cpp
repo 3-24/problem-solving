@@ -4,7 +4,7 @@ void score(void){
   int count = 0;
   char arr[81];
   int point[81];
-  scanf("%s",&arr);
+  scanf("%s",arr);
   int i = 0;
   while (1){
     if (arr[i] == '\0'){

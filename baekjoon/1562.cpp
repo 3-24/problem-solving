@@ -16,14 +16,8 @@ int do_dp(int depth, int used, int last_digit){
     return dp[depth][used][last_digit];
 }
 
-void test();
 
 int main(){
-#ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-#else
-#endif
     faster
     //test();
     scanf("%d", &n);
@@ -39,25 +33,4 @@ int main(){
     }
     printf("%d", sum);
     return 0;
-}
-
-void test(){
-    long long int result = 0;
-    for (int m=1; m<=40; m++){
-        n = m;
-        memset(dp, 0, 101*1024*10*sizeof(int));
-        for (int last_digit = 0; last_digit<10; last_digit++){
-            dp[n-1][(1<<10) - 1][last_digit] = 1;
-        }
-
-        int sum = 0;
-        for (int digit=1; digit<10; digit++){
-            sum += do_dp(0, 1 << digit, digit);
-            sum %= MOD;
-            cerr << sum << '\n';
-        }
-        cerr << m << ' ' << sum << '\n';
-        result += sum;
-    }
-    cerr << result << '\n';
 }

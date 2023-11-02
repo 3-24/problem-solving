@@ -2,100 +2,10 @@
 
 import os
 from pathlib import Path
-from test import test
-import subprocess as sp
 import prompt_toolkit as pt
-import urllib3
-from bs4 import BeautifulSoup
+from util import MatWaeTeulUnit
 
 root = Path(__file__).parent.absolute()
-
-def bin_path(file):
-    return Path("bin") / file.with_suffix("")
-
-
-def compile(file):
-    if file.suffix in [".c", ".cpp", ".cc"]:
-        os.system(f"mkdir -p {bin_path(file).parent}")
-        command = [
-            "clang++",
-            "-std=c++20",
-            "-fsanitize=address",
-            "-O0",
-            "-g",
-            "-Wall",
-            str(file),
-            "-o",
-            str(bin_path(file)),
-        ]
-        print(" ".join(command))
-        r = sp.run(command, cwd=root)
-        if r.returncode != 0:
-            print("Compile failed.")
-            return 1
-        else:
-            print("Compile success.")
-            return 0
-    else:
-        print("Not supported file type")
-        return 1
-
-
-def compile_if_recent(func):
-    def inner(*args):
-        file = args[0].file
-        bin_file = bin_path(file)
-        if file.suffix in [".c", ".cpp", ".cc"]:
-            if (
-                not bin_file.is_file()
-                or file.stat().st_mtime > bin_path(file).stat().st_mtime
-            ):
-                r = compile(file)
-                if r == 1:
-                    return 1
-        func(*args)
-        return 0
-
-    return inner
-
-def scrap_test(file):
-    # Get problem number
-    problem_number = file.stem
-    # Get problem url
-    if file.parent.name == "baekjoon":
-        problem_url = f"https://www.acmicpc.net/problem/{problem_number}"
-    else:
-        print("Not supported problem")
-        return None
-
-    # Get problem page
-    http = urllib3.PoolManager()
-    r = http.request("GET", problem_url, headers={"User-Agent": "Mozilla/5.0"})
-    soup = BeautifulSoup(r.data, "html.parser")
-    
-    samples = list(map(lambda x: x.text, soup.findAll("pre", {"class": "sampledata"})))
-    
-    for i in range(0, len(samples), 2):
-        add_testcase(file, samples[i], samples[i+1])
-
-def add_testcase(file, input, output):
-    test_file = file.with_suffix(".test")
-    
-    with open(test_file, "rb") as f:
-        if f.read().endswith(b"\n"):
-            linebreak_end = True
-        else:
-            linebreak_end = False
-    with open(test_file, "ab") as f:
-        if not linebreak_end:
-            f.write(b"\n")
-        f.write(b"\n")
-        f.write(b"IN:\n")
-        f.write(input.encode())
-        f.write(b"OUT:\n")
-        f.write(output.encode())
-    
-
 
 def path_ignore(filename):
     if any(
@@ -108,7 +18,6 @@ def path_ignore(filename):
     if filename.startswith("bin"):
         return False
     return True
-
 
 class MatWaeTeulShell:
     intro = "Welcome to the matwaeteul shell. Type help or ? to list commands.\n"
@@ -129,17 +38,21 @@ class MatWaeTeulShell:
                 [
                     pt.completion.PathCompleter(file_filter=path_ignore),
                     pt.completion.WordCompleter(["exit", "quit"]),
+                    pt.completion.WordCompleter(["test"])
                 ]
             ),
         )
         if query == "exit" or query == "quit":
             self.do_exit()
         
-        self.file = Path(query)
-        if not self.file.parent.is_dir():
-            print("Directory not found")
-            self.file = None
-            self.file_selection()
+        if not Path(query).parent.is_dir():
+            answer = input(f"Directory {Path(query).parent} not found. Create? (y/n)")
+            if answer == "y":
+                os.system(f"mkdir -p {Path(query).parent}")
+            else:
+                self.file_selection()
+            
+        self.file = MatWaeTeulUnit(query, debug=True)
         self.cmdloop()
 
     def cmdloop(self):
@@ -155,8 +68,8 @@ class MatWaeTeulShell:
                 self.do_test()
             if command == "run":
                 self.do_run()
-            if command == "scrap_test":
-                self.do_scrap_test()
+            if command == "scrap":
+                self.do_scrap()
             if command == "compile":
                 self.do_compile()
             
@@ -166,26 +79,20 @@ class MatWaeTeulShell:
         os.system(f"code {self.file}")
         os.system(f"code {self.file.with_suffix('.test')}")
 
-    def do_scrap_test(self):
+    def do_scrap(self):
         print("Scraping test...")
-        scrap_test(self.file)
+        self.file.scrap(verbose=True)
 
-    @compile_if_recent
     def do_test(self):
         print("Testing...")
-        r = test(self.file)
-        if r == 0:
-            print("All test passed")
-        else:
-            print("Some test failed")
+        self.file.test(verbose=True, add_test=True, compile=True)
 
-    @compile_if_recent
     def do_run(self):
         print("Running...")
-        os.system(bin_path(self.file))
+        self.file.run(verbose=True, compile=True)
 
     def do_compile(self):
-        compile(self.file)
+        self.file.compile(verbose=True)
 
     def do_exit(self):
         if self.file is None:

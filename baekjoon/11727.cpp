@@ -3,7 +3,7 @@
 int main(){
     int n;
     scanf("%d",&n);
-    int D[n+1];
+    int D[1001];
     D[0] = 1;
     D[1] = 1;
     for (int i=2;i<=n;i++){

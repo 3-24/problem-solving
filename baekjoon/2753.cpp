@@ -15,5 +15,5 @@ bool isLeapYear(int year){
 int main(){
 	int year;
 	cin >> year;
-	cout << isLeapYear(year) ? 1 : 0 ;
+	cout << (isLeapYear(year) ? 1 : 0);
 }

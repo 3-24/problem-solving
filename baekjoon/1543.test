@@ -1,0 +1,23 @@
+IN:
+a a a a a
+a a
+OUT:
+2
+
+IN:
+aaaaaaa
+aa
+OUT:
+3
+
+IN:
+ababababa
+ababa
+OUT:
+1
+
+IN:
+ababababa
+aba
+OUT:
+2

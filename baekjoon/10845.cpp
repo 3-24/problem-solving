@@ -10,7 +10,7 @@ int main(){
     scanf("%d",&n);
     queue <int> q;
     while(n--){
-        scanf("%s",&arr);
+        scanf("%s",arr);
         if (!strcmp(arr,"push")){
             scanf("%d\n",&number_to_push);
             q.push(number_to_push);
@@ -25,7 +25,7 @@ int main(){
             }
         }
         else if (!strcmp(arr,"size")){
-            printf("%d\n",q.size());
+            printf("%zu\n",q.size());
         }
         else if (!strcmp(arr,"empty")){
             printf("%d\n",q.empty());

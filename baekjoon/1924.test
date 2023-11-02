@@ -1,0 +1,19 @@
+IN:
+9 2
+OUT:
+SUN
+
+IN:
+12 25
+OUT:
+TUE
+
+IN:
+3 14
+OUT:
+WED
+
+IN:
+1 1
+OUT:
+MON

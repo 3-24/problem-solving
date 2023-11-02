@@ -76,11 +76,6 @@ int solve(int N, int r, int c){
 }
 
 int main(){
-#ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-#else
-#endif
     faster
     int N,r,c;
     cin >> N >> r >> c;

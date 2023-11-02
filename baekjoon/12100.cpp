@@ -112,7 +112,7 @@ int main(){
     cout.tie(NULL);
 
     cin >> N;
-    int a[N*N];
+    int a[20*20];
 
     for (int i=0; i<N; i++){
         for (int j=0; j<N; j++){

@@ -14,7 +14,7 @@ int main(){
     int n, m;
     cin >> n >> m;
 
-    set<int> graph[n+1];
+    set<int> graph[32001];
     for (int i=1; i<=n; i++){
         graph[i] = set<int>();
     }

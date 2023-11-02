@@ -10,7 +10,7 @@ int main(){
     for (int i=1;i<=n;i++){
         q.push(i);
     }
-    int temp, count = 0, arr[n+1];
+    int temp, count = 0, arr[1001];
     while (!q.empty()){
         for (int i=1;i<=m;i++){
             temp = q.front();

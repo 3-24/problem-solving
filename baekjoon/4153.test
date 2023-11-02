@@ -1,0 +1,9 @@
+IN:
+6 8 10
+25 52 60
+5 12 13
+0 0 0
+OUT:
+right
+wrong
+right

@@ -60,19 +60,15 @@ template<typename T, typename U> void umax(T& a, U b){if (a < b) a = b;}
 template<typename T>
 bool exist_vector(vector<T> v, T x){return (find(v.begin(), v.end(), x) != v.end()) ? true : false;} // unsorted
 
+int count_ioi[1000005] = {0, };
+
 int main(){
-#ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-#else
-#endif
     faster
     int n,m;
     string s;
     cin >> n;
     cin >> m;
     cin >> s;
-    int count_ioi[m+5] = {0, };
     int count = 0;
     int k = 0;
     for (int i=2; i<m; i++){

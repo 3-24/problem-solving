@@ -11,11 +11,6 @@ struct compare {
 
 int main(){
     ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
-#ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-#else
-#endif
     int m;
     cin >> n >> m;
     vector<pair<int, int>> graph[100001];

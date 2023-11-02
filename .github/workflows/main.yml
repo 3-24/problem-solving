@@ -19,23 +19,15 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install Clang
+      - name: Install C
         run: |
           if ! [ -x "$(command -v sudo)" ]; then
             apt-get update
             apt-get install -y sudo
           fi
-          sudo apt-get update && sudo apt-get install -y git clang
+          sudo apt-get update && sudo apt-get install -y git clang python3-pip
+          pip3 install -r requirements.txt
 
       - name: Test C++ files
         run: |
-          for commit in $(git rev-list ${{ env.github_base_ref }}..${{ env.github_head_ref }}); do
-            for problem in $(git diff --name-only --diff-filter=AM $commit^1...$commit | grep '.cpp' | xargs); do
-              bin_file=bin/`echo $problem | sed 's/.cpp//g'`
-              clang++ -std=c++20 -fsanitize=address -o $bin_file $problem
-              python3 test.py $problem
-              if [[ $? -ne 0 ]]; then
-                exit 1
-              fi
-            done
-          done
+          bash test.sh

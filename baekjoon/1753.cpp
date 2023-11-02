@@ -89,11 +89,6 @@ vector<int> dijkstra(int start, int n, vector<unordered_map<int, int>> graph){
 }
 
 int main(){
-#ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-#else
-#endif
     faster
     int v, e, k;
     cin >> v >> e >> k;

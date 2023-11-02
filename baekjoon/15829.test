@@ -1,0 +1,17 @@
+IN:
+3
+zzz
+OUT:
+25818
+
+IN:
+1
+i
+OUT:
+9
+
+IN:
+5
+abcde
+OUT:
+4739715

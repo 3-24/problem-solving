@@ -69,11 +69,6 @@ bool whole_map[1001][1001];
 int dists[1001][1001][2];
 
 int main(){
-#ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-#else
-#endif
     faster
     int n, m;
     cin >> n >> m;

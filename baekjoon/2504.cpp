@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stack>
+#include <assert.h>
 using namespace std;
 
 int errorSum(int a,int b){
@@ -20,6 +21,10 @@ int repnum(char c){
   else if (c == '['){
     return 3;
   }
+  else {
+    assert(false);
+    return 0;
+  }
 }
 
 char reppair(char c){
@@ -28,6 +33,9 @@ char reppair(char c){
   }
   else if (c == '['){
     return ']';
+  } else {
+    assert(false);
+    return 0;
   }
 }
 
@@ -56,7 +64,7 @@ int calc(char s[], int start, int end){
 
 int main(){
   char s[31];
-  scanf("%s",&s);
+  scanf("%s",s);
   int n = strlen(s);
   printf("%d",calc(s,0,n));
 }

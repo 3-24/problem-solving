@@ -67,11 +67,6 @@ bool comp(pair<int, ll> a, pair<int, ll> b){
 int solution[1000002];
 
 int main(){
-#ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-#else
-#endif
     faster
     int n;
     cin >> n;

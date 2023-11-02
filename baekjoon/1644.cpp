@@ -3,15 +3,10 @@ using namespace std;
 
 #define faster  ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
 int main(){
-#ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-#else
-#endif
     faster
     int n;
     scanf("%d", &n);
-    bool sieve[n+1];
+    bool sieve[4000001];
     memset(sieve, true, sizeof(sieve));
     for (int p=2; p*p <= n; p++){
         if (sieve[p]){

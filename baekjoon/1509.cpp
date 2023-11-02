@@ -9,11 +9,6 @@ char char_seq[2502];
 int dp[2502];
 
 int main(){
-#ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-#else
-#endif
     faster
     scanf("%s", char_seq);
     int i = 0;

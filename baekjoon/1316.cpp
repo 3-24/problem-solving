@@ -10,7 +10,7 @@ int isgroup(void){
   for (int j=0;j<26;j++){
     visited[j] = 0;
   }
-  scanf("%s",&arr);
+  scanf("%s",arr);
   int i = 0;
   char c;
   while (arr[i] != '\0'){

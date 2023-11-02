@@ -1,0 +1,14 @@
+IN:
+The Curious Case of Benjamin Button
+OUT:
+6
+
+IN:
+The last character is a blank
+OUT:
+6
+
+IN:
+ The first character is a blank
+OUT:
+6

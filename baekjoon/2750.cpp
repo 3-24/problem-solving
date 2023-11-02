@@ -8,7 +8,7 @@ int compare(const void *a, const void *b){
 int main(){
   int n;
   scanf("%d",&n);
-  int numArr[n];
+  int numArr[1001];
   for (int i=0;i<n;i++){
     scanf("%d",&numArr[i]);
   }

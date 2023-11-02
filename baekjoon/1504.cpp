@@ -82,11 +82,6 @@ vector<int> dijkstra(int start, int n, vector<vector<pair<int, int>>> graph){
 }
 
 int main(){
-#ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-#else
-#endif
     faster
     int n, e;
     cin >> n >> e;

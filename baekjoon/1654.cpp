@@ -80,11 +80,6 @@ int bisect(int lo, int hi){
 }
 
 int main(){
-#ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-#else
-#endif
     faster
     cin >> k >> n;
     for (int i=0;i<k;i++){
