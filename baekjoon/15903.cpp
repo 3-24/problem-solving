@@ -9,7 +9,7 @@ ll sum = 0;
 
 vector<ll> A;
 
-int hapchae(){
+void hapchae(){
 	sum += A[0] + A[1];
 	ll temp;
 	temp = A[0]+A[1];
