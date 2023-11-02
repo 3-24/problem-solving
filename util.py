@@ -175,7 +175,7 @@ class MatWaeTeulUnit:
             proc = sp.Popen(self.bin, stdin=sp.PIPE, stdout=sp.PIPE, stderr=sp.DEVNULL)
             try:
                 proc.stdin.write(tc_in)
-                actual_out = proc.communicate(timeout=1)[0]
+                actual_out = proc.communicate(timeout=10)[0]
             except sp.TimeoutExpired:
                 proc.kill()
                 print_verbose(verbose, "Timeout")

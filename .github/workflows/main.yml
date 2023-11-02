@@ -19,7 +19,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install C
+      - name: Install dependencies
         run: |
           if ! [ -x "$(command -v sudo)" ]; then
             apt-get update
