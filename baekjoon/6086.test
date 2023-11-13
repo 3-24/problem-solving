@@ -1,0 +1,37 @@
+IN:
+5
+A B 3
+B C 3
+C D 5
+D Z 4
+B Z 6
+OUT:
+3
+
+IN:
+1
+A Z 1000
+OUT:
+1000
+
+IN:
+2
+A B 1000
+B Z 500
+OUT:
+500
+
+IN:
+2
+A a 500
+a Z 1000
+OUT:
+500
+
+IN:
+3
+A Z 1000
+Z A 1000
+A Z 1000
+OUT:
+3000
