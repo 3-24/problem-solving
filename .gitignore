@@ -1,14 +1,1 @@
-*.xml
-*.bin
-*.exe
-*.dll
-*.pptx
-cmake-build-debug/
-.idea/
-*.iml
-main.cpp
-.vscode/
-a.out
-*/bin/*
 bin
-__pycache__
