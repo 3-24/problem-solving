@@ -5,12 +5,6 @@ import urllib3
 from bs4 import BeautifulSoup
 import re
 
-
-def print_verbose(verbose, *args, **kwargs):
-    if verbose:
-        print(*args, **kwargs)
-
-
 class MatWaeTeulUnit:
     def __init__(self, src_file, debug=False):
         self.src = Path(src_file)
@@ -22,6 +16,8 @@ class MatWaeTeulUnit:
 
         if self.src.suffix in [".c", ".cpp", ".cc"]:
             self.language = "C++"
+        elif self.src.suffix == ".py":
+            self.language = "Python"
         else:
             self.language = "Unknown"
     
@@ -35,7 +31,7 @@ class MatWaeTeulUnit:
                 compile_cmd = f"clang++ -std=c++20 -fsanitize=address -O0 -g -Werror -DONLINE_JUDGE {self.src} -o {self.bin}"
             else:
                 compile_cmd = f"g++ -O2 -Wall -lm -std=gnu++20 -DONLINE_JUDGE {self.src} -o {self.bin}"
-            print_verbose(verbose, compile_cmd)
+            print(compile_cmd)
             
             compile_cmd = compile_cmd.split(" ")
             
@@ -47,12 +43,14 @@ class MatWaeTeulUnit:
             r = r.returncode
             
             if r == 0:
-                print_verbose(verbose, "Compilation success")
+                print("Compilation success")
             else:
-                print_verbose(verbose, "Compilation failed")
+                print("Compilation failed")
             return r
+        elif self.language == "Python":
+            pass
         else:
-            print_verbose(verbose, "Not supported file type")
+            print("Unsupported file type")
             return 1
 
     def get_edited_time(self):
@@ -70,20 +68,26 @@ class MatWaeTeulUnit:
         existing_tcs = set(self.parse_test())
         scraped_tcs = set(self.scrap_test(verbose))
 
+        if not self.suite.is_file():
+            self.suite.touch()
+        
         for tc in scraped_tcs - existing_tcs:
             self.add_test(*tc)
+        
+        print("Scraping done successfully")
+        print(f"Check {len(scraped_tcs)} test cases in {self.suite}")
 
     def scrap_test(self, verbose=False):
         if self.platform == "baekjoon":
             problem_url = f"https://www.acmicpc.net/problem/{self.problem}"
-            print_verbose(verbose, f"Scraping test from {problem_url}")
+            print(f"Scraping test from {problem_url}")
             # Get problem page
             http = urllib3.PoolManager()
-            r = http.request("GET", problem_url, headers={"User-Agent": "Mozilla/5.0"})
+            r = http.request("GET", problem_url, headers={"User-Agent": 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36'})
             soup = BeautifulSoup(r.data, "html.parser")
             
             if not soup.find("span", {"class": "problem-label problem-label-spj"}) is None:
-                print_verbose(verbose, "Special Judge problem")
+                print("Special Judge problem")
                 return []
             
             samples = list(
@@ -99,7 +103,7 @@ class MatWaeTeulUnit:
             ]
 
         else:
-            print_verbose("Not supported problem")
+            print("Unsupported platform")
             return []
 
     def add_test(self, input, output):
@@ -145,10 +149,16 @@ class MatWaeTeulUnit:
 
         return tests
 
+    def _command(self):
+        if self.language == "Python":
+            return ["python3", str(self.src)]
+        else:
+            return [str(self.bin)]
+
     def run(self, compile=True, verbose=False):
         if compile:
             self.compile_if_recent(verbose)
-        os.system(self.bin)
+        sp.run(self._command())
     
     def test(self, verbose=False, add_test=True, compile=True):
         if compile:
@@ -158,28 +168,19 @@ class MatWaeTeulUnit:
         if add_test:
             self.add_test_if_necessary(verbose)
 
-        # Check if test file exist
-        if not os.path.isfile(self.suite):
-            print_verbose(verbose, "No test file found.")
-            return 0
-
-        if not os.path.isfile(self.bin):
-            print_verbose(verbose, "No binary found.")
-            return 1
-
         test_suite = self.parse_test()
 
         passed = True
         for tc_in, tc_out in test_suite:
             # Feed target with input and check if output is correct
-            proc = sp.Popen(self.bin, stdin=sp.PIPE, stdout=sp.PIPE, stderr=sp.DEVNULL)
+            proc = sp.Popen(self._command(), stdin=sp.PIPE, stdout=sp.PIPE)
             try:
                 proc.stdin.write(tc_in)
                 actual_out = proc.communicate(timeout=1)[0]
             except sp.TimeoutExpired:
                 proc.kill()
-                print_verbose(verbose, "Timeout")
-                print_verbose(verbose, "FAIL")
+                print("Timeout")
+                print("FAIL")
                 passed = False
                 continue
                 
@@ -187,11 +188,11 @@ class MatWaeTeulUnit:
             actual_out = b'\n'.join(map(lambda x: x.rstrip(), (actual_out.rstrip() + b'\n').split(b'\n')))
 
             if tc_out == actual_out:
-                print_verbose(verbose, "PASS")
+                print("PASS")
             else:
-                print_verbose(verbose, "FAIL")
-                print_verbose(verbose, "Expected: ", tc_out)
-                print_verbose(verbose, "Output: ", actual_out)
+                print("FAIL")
+                print("Expected: ", tc_out)
+                print("Output: ", actual_out)
                 passed = False
 
         if passed:
